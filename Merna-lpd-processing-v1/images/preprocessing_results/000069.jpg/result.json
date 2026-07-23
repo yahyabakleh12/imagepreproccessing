@@ -1,0 +1,40 @@
+{
+  "pipeline_stage": "preprocessing_lpd_back",
+  "image": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\000069.jpg",
+  "source_image": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\000069.jpg",
+  "image_stem": "000069",
+  "result_folder": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\preprocessing_results\\000069.jpg",
+  "original_image": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\preprocessing_results\\000069.jpg\\original_image.jpg",
+  "has_plate": true,
+  "detected_plate_count": 1,
+  "lpd_crops": [
+    {
+      "image": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\000069.jpg",
+      "index": 0,
+      "raw_lpd": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\preprocessing_results\\000069.jpg\\lpd.jpg",
+      "plate_crop": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\preprocessing_results\\000069.jpg\\lpd.jpg",
+      "lpd_after_preprocessing": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\preprocessing_results\\000069.jpg\\lpd_after_preprocessing.png",
+      "pasted_to_original": true,
+      "bbox_xyxy": {
+        "x1": 87.05635070800781,
+        "y1": 142.76036071777344,
+        "x2": 138.3053741455078,
+        "y2": 179.3380889892578
+      },
+      "crop_dimensions": {
+        "x": 87,
+        "y": 143,
+        "width": 51,
+        "height": 36
+      },
+      "confidence": 0.701171875,
+      "class_id": 0,
+      "preprocessing_error": null
+    }
+  ],
+  "image_after_preprocessing": "C:\\Merna\\OCR\\Preprocessing-CV\\lpd-processing\\images\\preprocessing_results\\000069.jpg\\image_after_preprocessing.jpg",
+  "pasted_filtered_lpd_count": 1,
+  "error": null,
+  "plate_detector_time_sec": 0.011,
+  "preprocessing_error": null
+}
