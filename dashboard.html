@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LPD Image Processor</title>
+  <style>
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #f4f6f8;
+      color: #17202f;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      width: min(1000px, 100%);
+      padding: 28px;
+      border: 1px solid #dce1e7;
+      border-radius: 14px;
+      background: white;
+      box-shadow: 0 12px 35px rgba(20, 31, 48, .08);
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      text-align: center;
+      font-size: 25px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid #cbd2da;
+      border-radius: 8px;
+      font: inherit;
+    }
+
+    button {
+      flex: 0 0 auto;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 8px;
+      background: #176b5b;
+      color: white;
+      font: inherit;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
+    #message {
+      min-height: 20px;
+      margin: 18px 0 0;
+      color: #687386;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    #message.error { color: #b42318; }
+
+    #results {
+      display: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    figure {
+      min-width: 0;
+      margin: 0;
+    }
+
+    figcaption {
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: 300px;
+      border-radius: 9px;
+      background: #edf0f3;
+      object-fit: contain;
+    }
+
+    .empty {
+      display: grid;
+      height: 300px;
+      place-items: center;
+      border-radius: 9px;
+      background: #edf0f3;
+      color: #687386;
+      text-align: center;
+    }
+
+    @media (max-width: 560px) {
+      main { padding: 20px; }
+      .controls { flex-direction: column; }
+      button { min-height: 44px; }
+      #results { grid-template-columns: 1fr; }
+      figure img, .empty { height: 230px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Upload an image</h1>
+
+    <div class="controls">
+      <input id="imageInput" type="file" accept="image/*">
+      <button id="showButton" type="button">Show result</button>
+    </div>
+
+    <p id="message"></p>
+    <div id="results">
+      <figure>
+        <figcaption>1. Original image</figcaption>
+        <img id="originalImage" alt="Original image">
+      </figure>
+      <figure>
+        <figcaption>2. Detected plate</figcaption>
+        <div id="plateEmpty" class="empty">No plate detected</div>
+        <img id="plateImage" alt="Detected plate" hidden>
+      </figure>
+      <figure>
+        <figcaption>3. Enhanced plate</figcaption>
+        <div id="enhancedEmpty" class="empty">No enhanced plate</div>
+        <img id="enhancedImage" alt="Enhanced plate" hidden>
+      </figure>
+      <figure>
+        <figcaption>4. Final result</figcaption>
+        <img id="finalImage" alt="Final processed result">
+      </figure>
+    </div>
+  </main>
+
+  <script>
+    const imageInput = document.querySelector("#imageInput");
+    const showButton = document.querySelector("#showButton");
+    const message = document.querySelector("#message");
+    const results = document.querySelector("#results");
+    const originalImage = document.querySelector("#originalImage");
+    const plateImage = document.querySelector("#plateImage");
+    const enhancedImage = document.querySelector("#enhancedImage");
+    const finalImage = document.querySelector("#finalImage");
+    const plateEmpty = document.querySelector("#plateEmpty");
+    const enhancedEmpty = document.querySelector("#enhancedEmpty");
+
+    function setOptionalImage(imageElement, emptyElement, source) {
+      imageElement.hidden = !source;
+      emptyElement.hidden = Boolean(source);
+      if (source) imageElement.src = source;
+    }
+
+    showButton.addEventListener("click", async () => {
+      const image = imageInput.files[0];
+      if (!image) {
+        message.textContent = "Please choose an image first.";
+        message.className = "error";
+        return;
+      }
+
+      showButton.disabled = true;
+      showButton.textContent = "Processing...";
+      message.textContent = "Please wait...";
+      message.className = "";
+      results.style.display = "none";
+
+      const form = new FormData();
+      form.append("image", image, image.name);
+
+      try {
+        const response = await fetch("/process/results", {
+          method: "POST",
+          body: form
+        });
+
+        if (!response.ok) {
+          const error = await response.json().catch(() => ({}));
+          throw new Error(error.detail || "Could not process the image.");
+        }
+
+        const data = await response.json();
+        originalImage.src = data.images.original;
+        setOptionalImage(plateImage, plateEmpty, data.images.plate_crop);
+        setOptionalImage(enhancedImage, enhancedEmpty, data.images.enhanced_plate);
+        finalImage.src = data.images.final_result;
+        results.style.display = "grid";
+        message.textContent = "";
+      } catch (error) {
+        message.textContent = error.message;
+        message.className = "error";
+      } finally {
+        showButton.disabled = false;
+        showButton.textContent = "Show result";
+      }
+    });
+  </script>
+</body>
+</html>

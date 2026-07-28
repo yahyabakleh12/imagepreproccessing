@@ -1,0 +1,41 @@
+{
+  "pipeline_stage": "preprocessing_lpd_back",
+  "image": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\000066.jpg",
+  "source_image": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\000066.jpg",
+  "image_stem": "000066",
+  "result_folder": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\preprocessing_results\\000066.jpg",
+  "original_image": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\preprocessing_results\\000066.jpg\\original_image.jpg",
+  "has_plate": true,
+  "detected_plate_count": 1,
+  "lpd_crops": [
+    {
+      "image": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\000066.jpg",
+      "index": 0,
+      "raw_lpd": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\preprocessing_results\\000066.jpg\\lpd.jpg",
+      "plate_crop": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\preprocessing_results\\000066.jpg\\lpd.jpg",
+      "lpd_after_preprocessing": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\preprocessing_results\\000066.jpg\\lpd_after_preprocessing.png",
+      "pasted_to_original": true,
+      "bbox_xyxy": {
+        "x1": 69.5296859741211,
+        "y1": 122.6957015991211,
+        "x2": 112.8265609741211,
+        "y2": 148.80117797851562
+      },
+      "crop_dimensions": {
+        "x": 70,
+        "y": 123,
+        "width": 43,
+        "height": 26
+      },
+      "confidence": 0.7509765625,
+      "class_id": 0,
+      "preprocessing_error": null
+    }
+  ],
+  "image_after_preprocessing": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\preprocessing_results\\000066.jpg\\image_after_preprocessing.jpg",
+  "pasted_filtered_lpd_count": 1,
+  "error": null,
+  "plate_detector_time_sec": 0.017,
+  "preprocessing_error": null,
+  "final_image_copy": "C:\\merna\\License-plate-preprocessing\\lpd-processing-v3-final-filtters-portal-filters2\\lpd-processing\\images\\final images\\000066.jpg"
+}
