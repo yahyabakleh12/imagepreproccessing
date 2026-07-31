@@ -1,0 +1,21 @@
+# Tested with Python 3.11 and 3.12 on Windows.
+# Install with: python -m pip install -r requirements.txt
+#
+# Torch is intentionally specified without a CUDA suffix. Pip will install the
+# standard build supported by the current operating system.
+
+numpy>=2.0,<2.1
+scipy>=1.15,<1.16
+opencv-python>=4.11,<4.12
+scikit-image>=0.25,<0.26
+bm3d>=4.0,<4.1
+
+torch>=2.7,<2.8
+transformers>=5.14,<5.15
+ultralytics>=8.3.145,<8.4
+openvino>=2025.1,<2026
+
+fire>=0.7,<0.8
+fastapi>=0.115,<0.116
+uvicorn[standard]>=0.34,<0.35
+python-multipart>=0.0.20,<0.1
